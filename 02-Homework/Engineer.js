@@ -14,7 +14,7 @@ class Engineer extends Employee {
   }
 }
 
-const engineer = new Engineer('', '')
+const engineer = new Engineer('')
 engineer.getName()
 engineer.getId()
 engineer.getEmail()
