@@ -21,17 +21,8 @@ var newTeamMember = ''
 
 
 function makeHtml() {
-    //loop thru team array and make a chunck of html for each person
-    //stick each chunck into the htmlArray
-    // do fs.writeFIle with htmlPage
 
     var htmlArray = []
-
-    // doo al ur things look thru team array anad make chucks of html!!
-
-    // DO FOR LOOP
-
-
 
     var i;
     for (i = 0; i < team.length; i++) {
@@ -39,106 +30,102 @@ function makeHtml() {
         if (team[i].job == 'Manager') {
 
             var managerChunk =
-                `<div class="card col-md-4">
+                `<div class="card col-md-3">
                 <div class="card-header">
                     <h5>${team[i].name}</h5>
                     <h5>${team[i].job}</h5>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">${team[i].id}</h5>
-                    <p class="card-text">${team[i].email}</p> 
+                    <p class="card-title">ID: ${team[i].id}</p>
 
-                    <p> ${team[i].officeNumber}  </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <p>Office Number: ${team[i].officeNumber}  </p>
+
+                    <a href="#" class="btn btn-light">${team[i].email}</a>
         </div>
         </div>`
-
             htmlArray.push(managerChunk)
-            console.log(managerChunk, 'this is manager chunk')
-
 
 
         } else if (team[i].job == 'Intern') {
 
             var internChunk =
-                `<div class="card col-md-4">
+                `<div class="card col-md-3">
                 <div class="card-header">
                     <h5>${team[i].name}</h5>
                     <h5>${team[i].job}</h5>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">${team[i].id}</h5>
-                    <p class="card-text">${team[i].email}</p> 
+                    <p class="card-title">ID: ${team[i].id}</p>
 
-                    <p> ${team[i].school}  </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <p>Alma Mater: ${team[i].school}</p>
+
+                    <a href="#" class="btn btn-light">${team[i].email}</a>
+                    
         </div>
     </div>`
             htmlArray.push(internChunk)
-            console.log(internChunk, 'this is intern chunk')
-
-
-
+        
 
         } else if (team[i].job == 'Engineer') {
 
             var engineerChunk = `
     
-            <div class="card col-md-4">
+            <div class="card col-md-3">
                 <div class="card-header">
                     <h5>${team[i].name}</h5>
                     <h5>${team[i].job}</h5>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">${team[i].id}</h5>
-                    <p class="card-text">${team[i].email}</p> 
+                    <p class="card-title"> ID: ${team[i].id}</p>
 
-                    <p> ${team[i].github}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="url">https://github.com/${team[i].github}</a>
+
+                    <a href="#" class="btn btn-light">${team[i].email}</a>
         </div>
     </div>`
-
             htmlArray.push(engineerChunk)
-            console.log(engineerChunk, 'this is engineer chunk')
 
         }
 
     }
 
-    // }
-
-
-
     var pageHtml = `
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Team Profile</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-            <style>
-                
-            </style>
-    </head>
-    
-    <body>
-    
-        <div class="row">
-    
-        ${htmlArray.join()}
-        
-        </div>
-    
-        
-    
-    </body>
-    
-    </html>
 
-`
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+
+    </style>
+</head>
+
+<body>
+
+    <Header>
+        <h1>Team Profile</h1>
+    </Header>
+
+    <div class="row">
+
+    ${htmlArray.join("")}
+
+
+    </div>
+
+</body>
+
+</html>
+    
+    `
+
 
 
 
@@ -209,7 +196,7 @@ function engineerQ(baseLineAnswers) {
             {
                 name: "github",
                 type: "input",
-                message: "What is the engineer's github address?",
+                message: "What is the engineer's github username?",
             },
         ]).then(function (answers) {
             console.log('final answer fro engineer!!!', answers)
