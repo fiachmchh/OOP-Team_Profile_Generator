@@ -7,7 +7,7 @@ class Employee {
       this.email = email;
     }
 
-    // Method which prints all of the stats for a character
+    // Methods...
   
     getName() {
       console.log(`This employee is called ${this.name}.`);

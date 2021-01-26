@@ -4,6 +4,7 @@ class Intern extends Employee {
   constructor(school, name, job, id, email) {
     super(name, id, email)
     this.school = school;
+    this.job = job
   }
 
   getSchool() {
@@ -16,9 +17,4 @@ class Intern extends Employee {
   }
 }
 
-// const intern = new Intern('')
-// intern.getName()
-// intern.getId()
-// intern.getEmail()
-// intern.getRole()
 module.exports = Intern

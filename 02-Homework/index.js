@@ -8,12 +8,14 @@ var inquirer = require('inquirer');
 var fs = require('fs');
 var jest = require("jest")
 
-// is this needed?
+
 var Employee = require('./Employee')
 var Intern = require('./Intern')
 var Manager = require('./Manager')
+var Engineer = require('./Engineer')
 
 var team = []
+var newTeamMember = ''
 
 
 
@@ -23,47 +25,122 @@ function makeHtml() {
     //stick each chunck into the htmlArray
     // do fs.writeFIle with htmlPage
 
-    var htmlArray = [`<h1 class=''>Name: Bill</h1>`, `<h1>Name: Tall</h1>`, `<h1>Name: lol</h1>`]
-
-
-
+    var htmlArray = []
 
     // doo al ur things look thru team array anad make chucks of html!!
 
     // DO FOR LOOP
-         var newChunk = `
 
 
-                <div> Title : ${team[i].name}</div>
 
-                ID: ${answer.id}
+    var i;
+    for (i = 0; i < team.length; i++) {
 
-                Email: ${answers.email}
+        if (team[i].job == 'Manager') {
 
-            `
-            htmlArray.push(newChunk)
+            var managerChunk =
+                `<div class="card col-md-4">
+                <div class="card-header">
+                    <h5>${team[i].name}</h5>
+                    <h5>${team[i].job}</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${team[i].id}</h5>
+                    <p class="card-text">${team[i].email}</p> 
 
+                    <p> ${team[i].officeNumber}  </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        </div>`
+
+            htmlArray.push(managerChunk)
+            console.log(managerChunk, 'this is manager chunk')
+
+
+
+        } else if (team[i].job == 'Intern') {
+
+            var internChunk =
+                `<div class="card col-md-4">
+                <div class="card-header">
+                    <h5>${team[i].name}</h5>
+                    <h5>${team[i].job}</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${team[i].id}</h5>
+                    <p class="card-text">${team[i].email}</p> 
+
+                    <p> ${team[i].school}  </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>`
+            htmlArray.push(internChunk)
+            console.log(internChunk, 'this is intern chunk')
+
+
+
+
+        } else if (team[i].job == 'Engineer') {
+
+            var engineerChunk = `
+    
+            <div class="card col-md-4">
+                <div class="card-header">
+                    <h5>${team[i].name}</h5>
+                    <h5>${team[i].job}</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${team[i].id}</h5>
+                    <p class="card-text">${team[i].email}</p> 
+
+                    <p> ${team[i].github}</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>`
+
+            htmlArray.push(engineerChunk)
+            console.log(engineerChunk, 'this is engineer chunk')
+
+        }
+
+    }
+
+    // }
 
 
 
     var pageHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OOPHW</title>
-    <style>
-
-    </style>
-</head>
-<body>
-    <h1>Placeholder</h1>
-    ${htmlArray.join()}
+    <!DOCTYPE html>
+    <html lang="en">
     
-</body>
-</html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Team Profile</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <style>
+                
+            </style>
+    </head>
+    
+    <body>
+    
+        <div class="row">
+    
+        ${htmlArray.join()}
+        
+        </div>
+    
+        
+    
+    </body>
+    
+    </html>
+
 `
+
+
 
     console.log('page test ????', pageHtml)
     fs.writeFile('indexTest.html', pageHtml, function (err) {
@@ -86,7 +163,7 @@ function internQ(baseLineAnswers) {
             console.log('final answer fro intern!!!', answers)
             console.log('baseline answers ??', baseLineAnswers)
 
-            var newTeamMember = new Intern(answers.school, baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, baseLineAnswers.email)
+            newTeamMember = new Intern(answers.school, baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, baseLineAnswers.email)
             console.log(newTeamMember)
 
             team.push(newTeamMember)
@@ -125,8 +202,31 @@ function managerQ(baseLineAnswers) {
         })
 }
 
-function engineerQ() {
+function engineerQ(baseLineAnswers) {
     console.log('time to ask eng Q!!')
+    inquirer
+        .prompt([
+            {
+                name: "github",
+                type: "input",
+                message: "What is the engineer's github address?",
+            },
+        ]).then(function (answers) {
+            console.log('final answer fro engineer!!!', answers)
+            console.log('baseline answers ??', baseLineAnswers)
+
+            var newTeamMember = new Engineer(answers.github, baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, baseLineAnswers.email)
+            console.log(newTeamMember)
+
+            team.push(newTeamMember)
+
+            console.log(team)
+
+            addAnother()
+
+
+        })
+
 }
 
 function addAnother() {
@@ -144,6 +244,7 @@ function addAnother() {
                 mainQuestions()
             } else {
                 console.log('time to make the html')
+                makeHtml()
             }
 
         })
@@ -159,15 +260,12 @@ function mainQuestions() {
                 message: "Wat is the first name of the Employee?",
             },
 
-            //Insert something to choose from Employee roles
-
             {
                 name: "job",
                 type: "list",
                 message: "Wat is the Employee's job?",
                 choices: ["Engineer", new inquirer.Separator(), "Intern", new inquirer.Separator(), "Manager"]
             },
-
 
             {
                 name: "id",
@@ -191,7 +289,7 @@ function mainQuestions() {
             console.log('answers!!', answers)
 
             if (answers.job == 'Engineer') {
-                engineerQ()
+                engineerQ(answers)
             } else if (answers.job == 'Intern') {
                 internQ(answers)
             } else if (answers.job == 'Manager') {
@@ -199,45 +297,12 @@ function mainQuestions() {
             }
 
 
-
-
-            //     var newpage = `
-
-
-            //     <div> Title : ${answers.name}</div>
-
-            //     ID: ${answer.id}
-
-            //     Email: ${answers.email}
-
-            // `
-
-            // http.createServer(function(req, res){
-            //     res.writeHead(200, {'content-type': 'text/html'});
-            //     const html = fs.readFileSync('./index.html');
-            //     res.end(html);
-
-            // }).listen(3000, () => {
-            //     console.log("running on 3000");
-            // })
-
-
-            // //
-
-
-            // fs.writeFile('index.html', newpage, function (err) {
-            //     if (err) throw err;
-            //     console.log('Saved!');
-            // });
-
         })
 
 }
 
 
 
-
-
-
 mainQuestions()
+
 
