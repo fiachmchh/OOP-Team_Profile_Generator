@@ -10,15 +10,18 @@ class Employee {
     // Methods...
   
     getName() {
-      console.log(`This employee is called ${this.name}.`);
+      return (this.name)
+      // console.log(`This employee is called ${this.name}.`);
     }
 
     getId() {
-        console.log(`This employee has an id of ${this.id}`);
+      return (this.id)
+        // console.log(`This employee has an id of ${this.id}`);
     }
 
     getEmail() {
-        console.log(`The email for this employee is ${this.email}.`)
+      return (this.email)
+        // console.log(`The email for this employee is ${this.email}.`)
     }
 
     getRole() {
