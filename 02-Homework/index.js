@@ -1,8 +1,3 @@
-
-// AS A manager
-// I WANT to generate a webpage that displays my team's basic info.
-// SO THAT I have quick access to their emails and GitHub profile
-
 const http = require('http');
 var inquirer = require('inquirer');
 var fs = require('fs');
@@ -18,8 +13,6 @@ var team = []
 var newTeamMember = ''
 
 
-
-
 function makeHtml() {
 
     var htmlArray = []
@@ -32,15 +25,16 @@ function makeHtml() {
             var managerChunk =
                 `<div class="card col-md-3">
                 <div class="card-header">
-                    <h5>${team[i].name}</h5>
+                    <h5>${team[i].name} :</h5>
                     <h5>${team[i].job}</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-title">ID: ${team[i].id}</p>
+                    <p class="card-title">ID : ${team[i].id}</p>
 
-                    <p>Office Number: ${team[i].officeNumber}  </p>
+                    <p>Office Number : ${team[i].officeNumber}  </p>
 
-                    <a href="#" class="btn btn-light">${team[i].email}</a>
+                    <a href = "mailto: ${team[i].email}" class="btn btn-link">${team[i].email}</a>
+
         </div>
         </div>`
             htmlArray.push(managerChunk)
@@ -51,20 +45,20 @@ function makeHtml() {
             var internChunk =
                 `<div class="card col-md-3">
                 <div class="card-header">
-                    <h5>${team[i].name}</h5>
+                    <h5>${team[i].name} :</h5>
                     <h5>${team[i].job}</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-title">ID: ${team[i].id}</p>
+                    <p class="card-title">ID : ${team[i].id}</p>
 
-                    <p>Alma Mater: ${team[i].school}</p>
+                    <p>Alma Mater : ${team[i].school}</p>
 
-                    <a href="#" class="btn btn-light">${team[i].email}</a>
+                    <a href = "mailto: ${team[i].email}" class="btn btn-link">${team[i].email}</a>
                     
         </div>
     </div>`
             htmlArray.push(internChunk)
-        
+
 
         } else if (team[i].job == 'Engineer') {
 
@@ -72,15 +66,16 @@ function makeHtml() {
     
             <div class="card col-md-3">
                 <div class="card-header">
-                    <h5>${team[i].name}</h5>
+                    <h5>${team[i].name} :</h5>
                     <h5>${team[i].job}</h5>
                 </div>
                 <div class="card-body">
-                    <p class="card-title"> ID: ${team[i].id}</p>
+                    <p class="card-title"> ID : ${team[i].id}</p>
 
-                    <a href="url">https://github.com/${team[i].github}</a>
+                    <p><a href="https://github.com/${team[i].github}" class="btn btn-link">GitHub Profile</a></p>
 
-                    <a href="#" class="btn btn-light">${team[i].email}</a>
+                    <a href = "mailto: ${team[i].email}" class="btn btn-link">${team[i].email}</a>
+
         </div>
     </div>`
             htmlArray.push(engineerChunk)
@@ -92,28 +87,32 @@ function makeHtml() {
     var pageHtml = `
 
     <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Profile</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-
-    </style>
-</head>
-
-<body>
-
-    <Header>
-        <h1>Team Profile</h1>
-    </Header>
-
-    <div class="row">
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Team Profile</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    
+        </style>
+    </head>
+    
+    <body>
+    
+        <header>
+            <h1>Team Profile</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polygon fill="white" points="0,100 100,0 100,100"/>
+            </svg>
+          </header>
+    
+            <div class="row">
+    
 
     ${htmlArray.join("")}
 
@@ -128,13 +127,15 @@ function makeHtml() {
 
 
 
-
     console.log('page test ????', pageHtml)
     fs.writeFile('indexTest.html', pageHtml, function (err) {
         if (err) throw err;
         console.log('Saved!');
     });
+
+
 }
+
 
 
 function internQ(baseLineAnswers) {
@@ -150,7 +151,7 @@ function internQ(baseLineAnswers) {
             console.log('final answer fro intern!!!', answers)
             console.log('baseline answers ??', baseLineAnswers)
 
-            newTeamMember = new Intern(answers.school, baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, baseLineAnswers.email)
+            newTeamMember = new Intern(baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, answers.school, baseLineAnswers.email)
             console.log(newTeamMember)
 
             team.push(newTeamMember)
@@ -176,7 +177,7 @@ function managerQ(baseLineAnswers) {
             console.log('final answer fro intern!!!', answers)
             console.log('baseline answers ??', baseLineAnswers)
 
-            var newTeamMember = new Manager(answers.officenumber, baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, baseLineAnswers.email)
+            var newTeamMember = new Manager(baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, answers.officenumber, baseLineAnswers.email)
             console.log(newTeamMember)
 
             team.push(newTeamMember)
@@ -202,7 +203,7 @@ function engineerQ(baseLineAnswers) {
             console.log('final answer fro engineer!!!', answers)
             console.log('baseline answers ??', baseLineAnswers)
 
-            var newTeamMember = new Engineer(answers.github, baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, baseLineAnswers.email)
+            var newTeamMember = new Engineer(baseLineAnswers.name, baseLineAnswers.job, baseLineAnswers.id, answers.github, baseLineAnswers.email)
             console.log(newTeamMember)
 
             team.push(newTeamMember)
@@ -244,7 +245,7 @@ function mainQuestions() {
             {
                 name: "name",
                 type: "input",
-                message: "Wat is the first name of the Employee?",
+                message: "Wat is the name of the Employee?",
             },
 
             {
@@ -266,11 +267,6 @@ function mainQuestions() {
             },
         ])
 
-        //if = Engineer... get github address
-
-        //if = Intern ... get School
-
-        // if = Manager ... get office number
 
         .then(answers => {
             console.log('answers!!', answers)
@@ -287,8 +283,6 @@ function mainQuestions() {
         })
 
 }
-
-
 
 mainQuestions()
 
