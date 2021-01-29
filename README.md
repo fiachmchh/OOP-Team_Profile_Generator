@@ -39,7 +39,14 @@
     - Tests
 
 
-    ## Installation / Usage
+    ## Installation 
+    
+    Run git install to install node modules. Next, both 'Jest' and 'Inquire' must also be installed       
+    
+    (through node).
+    
+    
+    ## Usage
     
     Using node, the user runs the command 'node index.html'. This is folowed 
     
